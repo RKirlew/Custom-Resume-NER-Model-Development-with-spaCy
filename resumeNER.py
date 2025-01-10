@@ -185,10 +185,10 @@ def custom_ner_component(doc):
     doc.ents = list(custom_doc.ents)  #Replace entities with those from the custom model
     return doc
 
-# Add the custom NER component to the pre-trained pipeline
+#Add the custom NER component to the pre-trained pipeline
 en_core_web_sm.add_pipe("custom_ner_component", name="custom_ner", last=True)
 
-# Use the combined pipeline
+#Use the combined pipeline
 
 
 import spacy
@@ -214,7 +214,7 @@ def combine_entities(doc, custom_doc):
 
 @spacy.language.Language.component("combine_ner")
 def combine_ner_component(doc):
-    custom_doc = custom_ner(doc.text)  # Process text with the custom NER model
+    custom_doc = custom_ner(doc.text)  #Process text with the custom NER model
     doc = combine_entities(doc, custom_doc)
     return doc
 

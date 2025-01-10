@@ -68,13 +68,10 @@ January 2000 to January 2001 Company Name ï¼ City , State
 
 import spacy
 
-# Load the English NLP model
 nlp = spacy.load("en_core_web_sm")
 
-# Process a sentence
 doc = nlp("Experience with C++ at Apple")
 
-# Named Entity Recognition
 for entity in doc.ents:
     print(f"{entity.text} ({entity.label_})")
 
@@ -178,14 +175,14 @@ for text in job_descriptions:
 
 #pip install pdfplumber
 
-# Add custom NER as a pipeline component
+#Add custom NER as a pipeline component
 from spacy.language import Language
 en_core_web_sm = spacy.load("en_core_web_sm")
 @Language.component("custom_ner_component")
 def custom_ner_component(doc):
 
-    custom_doc = nlp_ner(doc.text)  # Use custom NER on the text
-    doc.ents = list(custom_doc.ents)  # Replace entities with those from the custom model
+    custom_doc = nlp_ner(doc.text)  #Use custom NER on the text
+    doc.ents = list(custom_doc.ents)  #Replace entities with those from the custom model
     return doc
 
 # Add the custom NER component to the pre-trained pipeline
@@ -265,7 +262,7 @@ entities = parse_resume(file_path)
 print(entities)
 
 def extract_entities_from_job_description(job_description):
-    # Use the NER model to process the job description
+    #Use the NER model to process the job description
     doc = en_core_web_sm(job_description)
     entities = {ent.label_: [] for ent in doc.ents}
     for ent in doc.ents:
@@ -275,7 +272,7 @@ def extract_entities_from_job_description(job_description):
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 def extract_entities_from_job_description(job_description):
-    # Use the NER model to process the job description
+    #Use the NER model to process the job description
     doc = en_core_web_sm(job_description)
     entities = {ent.label_: [] for ent in doc.ents}
     for ent in doc.ents:
@@ -290,27 +287,27 @@ def calculate_match_score(resume_entities, job_description_entities, entity_type
     return len(resume_set & job_set) / len(job_set) * 100
 
 def calculate_text_similarity(resume_text, job_description):
-    # TF-IDF vectorization for similarity calculation
+    #TF-IDF vectorization for similarity calculation
     vectorizer = TfidfVectorizer().fit_transform([resume_text, job_description])
     vectors = vectorizer.toarray()
     return cosine_similarity([vectors[0]], [vectors[1]])[0][0]
 
 def main(file_path, job_description):
-    # Parse resume and extract entities
+    #Parse resume and extract entities
     resume_entities = parse_resume(file_path)
 
-    # Extract entities from job description
+    #Extract entities from job description
     job_description_entities = extract_entities_from_job_description(job_description)
 
-    # Calculate skill and role match scores
+    #Calculate skill and role match scores
     skill_match = calculate_match_score(resume_entities, job_description_entities, "SKILL")
     role_match = calculate_match_score(resume_entities, job_description_entities, "ROLE")
 
-    # Calculate text similarity
+    #Calculate text similarity
     resume_text = " ".join([text for texts in resume_entities.values() for text in texts])
     similarity_score = calculate_text_similarity(resume_text, job_description)
 
-    # Print results
+    #Print results
     print(f"Skill Match Score: {skill_match:.2f}%")
     print(f"Role Match Score: {role_match:.2f}%")
     print(f"Text Similarity Score: {similarity_score:.2f}")
